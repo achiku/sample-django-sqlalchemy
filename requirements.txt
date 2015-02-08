@@ -1,0 +1,9 @@
+aldjemy==0.3.51
+Django==1.6.5
+django-extensions==1.5.0
+django-webtest==1.7.7
+factory-boy==2.4.1
+SQLAlchemy==0.9.8
+pytest==2.6.4
+flake8==2.3.0
+South==1.0.2
