@@ -1,15 +1,35 @@
 # -*- coding: utf-8 -*-
 from django.db.models import (
-    Model, DateTimeField, ForeignKey, IntegerField
+    Model, DateTimeField, ForeignKey, IntegerField,
 )
 from apps.customer.models import Customer
 from apps.item.models import Item
 
 
 class Sale(Model):
-    """ Sale Event
+    """ Sales
     """
-    time_sold = DateTimeField(verbose_name='Time Sold')
-    item = ForeignKey(Item, verbose_name='Item', related_name='sales')
-    customer = ForeignKey(Customer, verbose_name='customer', related_name='sales')
+    time = DateTimeField(verbose_name='Time Sold')
     price = IntegerField(verbose_name='Price')
+    customer = ForeignKey(Customer, verbose_name='Customer', related_name='sales')
+
+    def __unicode__(self):
+        return u'{}:{}'.format(self.time, self.customer.screen_name)
+
+    class Meta:
+        db_table = 'sale'
+
+
+class SaleDetail(Model):
+    """ Sales detail
+    """
+    item = ForeignKey(Item, verbose_name='Item', related_name='sales_details')
+    price = IntegerField(verbose_name='Price')
+    count = IntegerField(verbose_name='#Items')
+    sale = ForeignKey(Sale, related_name='details')
+
+    def __unicode__(self):
+        return u'{}:{}'.format(self.item.name, self.count, self.price)
+
+    class Meta:
+        db_table = 'sale_detail'
