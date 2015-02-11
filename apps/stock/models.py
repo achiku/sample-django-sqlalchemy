@@ -19,8 +19,16 @@ class StockHistory(Model):
     """ Stock history
     """
     time = DateTimeField(null=False)
-    item = ForeignKey(Item, verbose_name='Item', null=False)
+    stock = ForeignKey(
+        Stock, verbose_name='Stock',
+        null=False, related_name='details')
+    item = ForeignKey(
+        Item, verbose_name='Item',
+        null=False, related_name='stock_histries')
     count = IntegerField(null=False)
+
+    def __unicode__(self):
+        return u'{} {} {}'.format(self.time, self.item, self.count)
 
     class Meta:
         db_table = 'stock_history'

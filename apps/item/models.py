@@ -22,7 +22,10 @@ class ItemCategory(Model):
     """ Item category
     """
     name = CharField(verbose_name='Category Name', max_length=100)
-    items = ManyToManyField(Item, through='ItemCategoryRelation')
+    items = ManyToManyField(
+        Item, through='ItemCategoryRelation',
+        related_name='categories',
+        related_query_name='category')
 
     def __unicode__(self):
         return u'{}:{}'.format(self.id, self.name)
